@@ -1,0 +1,105 @@
+#Log serial out is on D4(GPIO2) should be connected to TX pin
+#Enabler is on D1(GPIO5) or D6(GPIO12) 
+#RX from P1 is on D7(GPIO13) TX is on D8(GPIO15)
+#Power in on 5V and GND pin
+#
+esphome:
+  name: d545dsmr
+  # Swith on level shifter after 
+  on_boot:
+    priority: 600
+    then:
+      - switch.turn_on: level_shifter
+
+esp8266:
+  board: d1_mini
+
+external_components:
+  - source: github://Szabka/ehcomp
+    components: [dsmr]
+
+# Enable logging on GPIO2(D4)
+logger:
+  baud_rate: 921600
+  hardware_uart: UART1
+  level: debug
+
+# Enable Home Assistant API
+api:
+ota:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D545DSMR Fallback Hotspot"
+    password: !secret ap_password
+# RX is on D7, enabler is on D6
+uart:
+  baud_rate: 115200
+  rx_buffer_size: 3000
+  rx_pin: GPIO13
+  id: uart_id
+
+dsmr:
+  id: dsmr_instance
+  uart_id: uart_id
+  max_telegram_length: 3000
+  
+sensor:
+  - platform: dsmr
+    energy_delivered_lux:
+      name: "DSMR Energy Consumed"
+    energy_returned_lux:
+      name: "DSMR Energy Produced"
+    power_delivered:
+      name: "DSMR Power Consumed"
+    power_returned:
+      name: "DSMR Power Produced"
+    electricity_failures:
+      name: "DSMR Electricity Failures"
+    electricity_long_failures:
+      name: "DSMR Long Electricity Failures"
+    voltage_l1:
+      name: "DSMR Voltage Phase 1"
+    voltage_l2:
+      name: "DSMR Voltage Phase 2"
+    voltage_l3:
+      name: "DSMR Voltage Phase 3"
+    current_l1  :
+      name: "DSMR Current Phase 1"
+    current_l2:
+      name: "DSMR Current Phase 2"
+    current_l3:
+      name: "DSMR Current Phase 3"
+    power_delivered_l1:
+      name: "DSMR Power Consumed Phase 1"
+    power_delivered_l2:
+      name: "DSMR Power Consumed Phase 2"
+    power_delivered_l3:
+      name: "DSMR Power Consumed Phase 3"
+    power_returned_l1:
+      name: "DSMR Power Produced Phase 1"
+    power_returned_l2:
+      name: "DSMR Power Produced Phase 2"
+    power_returned_l3:
+      name: "DSMR Power Produced Phase 3"
+  
+text_sensor:
+  - platform: dsmr
+    identification:
+      name: "DSMR Identification"
+    p1_version:
+      name: "DSMR Version"
+      
+switch:
+  - platform: gpio
+    pin: GPIO12
+    name: "dsrm levelshifter"
+    id: level_shifter
+    restore_mode: ALWAYS_ON 
+    
+captive_portal:
+    
