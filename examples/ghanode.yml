@@ -74,7 +74,7 @@ i2c:
 mqtt:
   broker: gha.hock.hu
   port: 8883
-  username: ghasensor
+  username: !secret mqtt_user
   password: !secret mqtt_password
   skip_cert_cn_check: false
   idf_send_async: false
@@ -106,6 +106,7 @@ mqtt:
     +VUwFj9tmWxyR/M=
     -----END CERTIFICATE-----
 
+# 0x5c = 0101 1100 
 sensor:
   - platform: am2320
     i2c_id: bus_a
@@ -130,7 +131,7 @@ sensor:
             const float Vcc = 3.3f;
             // potentiometer for adc max value (Vdark = 1.384 V, Rpot = 10k)
             const float Rb = 4194;  // middle–GND
-            const float Rt = 5806;  // VCC–middla
+            const float Rt = 5806;  // VCC-middle
             // LDR5528 photoresistor parameters ( gamma≈0.7; R10 8–20 kΩ → typical 15 kΩ)
             const float gamma = 0.70f; 
             const float R10   = 15000.0f;
