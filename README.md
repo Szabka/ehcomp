@@ -8,3 +8,7 @@ The current state of the parser:
   - ignores missing unit fields
   - integrates with HA without problems
 
+oregon listens on an existing remote_receiver and decodes Oregon Scientific v2
+(and logs v3) frames with the pulse decoder from oregonStation.ino. v2
+temperature and humidity are published on the sensor platform.
+
