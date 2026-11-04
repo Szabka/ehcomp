@@ -3,7 +3,7 @@ import esphome.config_validation as cv
 from esphome.components import remote_base
 from esphome.const import CONF_ID
 
-DEPENDENCIES = ["remote_receiver"]
+DEPENDENCIES = ["remote_base"]
 AUTO_LOAD = ["sensor"]
 MULTI_CONF = True
 

@@ -8,7 +8,10 @@ The current state of the parser:
   - ignores missing unit fields
   - integrates with HA without problems
 
-oregon listens on an existing remote_receiver and decodes Oregon Scientific v2
+oregon listens on a remote receiver and decodes Oregon Scientific v2
 (and logs v3) frames with the pulse decoder from oregonStation.ino. v2
 temperature and humidity are published on the sensor platform.
+
+rf_capture is an ESP8266 receiver. When its pulse ring overflows it logs the
+captured widths before dropping that sequence.
 
