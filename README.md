@@ -15,3 +15,6 @@ temperature and humidity are published on the sensor platform.
 rf_capture is an ESP8266 receiver. When its pulse ring overflows it logs the
 captured widths before dropping that sequence.
 
+keeloq_rx listens on a remote receiver. It logs the whole KeeLoq code word, the
+pulse segment, and the chip family (HCS101, HCS200/300/301, HCS360/361, or HCS362/365/370).
+
